@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KC.FileMan.Infrastructure\KC.FileMan.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\2_Domain\KC.FileMan.IRepository\KC.FileMan.IRepository.csproj" />
+  </ItemGroup>
+
+</Project>

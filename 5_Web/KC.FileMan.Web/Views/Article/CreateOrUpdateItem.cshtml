@@ -1,0 +1,65 @@
+﻿@model OMS.Domain.Entities.Item
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+            @Html.TextBoxFor(Model=> Model.Name)
+
+            <input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入产品名称" class="layui-input" value="@Model.Name">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">规格</label>
+        <div class="layui-input-block">
+            <input type="text" name="standard" lay-verify="required" placeholder="请输入规格" autocomplete="off" class="layui-input" value="@Model.Standard">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">保质期</label>
+        <div class="layui-input-block">
+            <input type="text" name="qualityGuaranteePeriod" lay-verify="required" autocomplete="off" placeholder="请输入保质期" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">单价</label>
+        <div class="layui-input-block">
+            <input type="text" name="price" lay-verify="required" placeholder="请输入单价" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产商</label>
+        <div class="layui-input-block">
+            <input type="text" name="manufacturer" lay-verify="required" autocomplete="off" placeholder="请输入产商" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+@section bottom_Scripts{
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+        , layer = layui.layer;
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index);
+            return false;
+        });
+    });
+</script>
+}
+
+

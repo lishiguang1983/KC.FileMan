@@ -1,0 +1,143 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLayUI.cshtml";
+    ViewBag.Title = "产品列表";
+}
+<style>
+    /*为列表内容添加滚动条，防止LayUI列表因为数据过多出现滚动条，导致列表列不自适应*/
+    body {
+        overflow-y: scroll;
+    }
+
+    .layui-body {
+        overflow-y: scroll;
+    }
+</style>
+<div class="selectTable">
+    文章标题：
+    <div class="layui-inline">
+        <input class="layui-input" name="title" id="title" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload">搜索</button>
+    <button class="layui-btn" id="add" style="float:right;">添加</button>
+</div>
+<table class="layui-hide" id="_list" lay-filter="_list"></table>
+<script type="text/html" id="bar">
+    @*<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>*@
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+@section bottom_Scripts{
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#_list',
+                url: '/Article/GetArticleList',
+                request: {
+                    /*pageName: 'page',*/ //页码的参数名称，默认：page
+                    limitName: 'PageSize' //每页数据量的参数名，默认：limit
+                },
+                page: true,
+                cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                cols: [[
+                    { type: 'checkbox' },
+                    { field: 'Title', title: '文章标题', width: 500 },
+                    { field: 'Description', title: '描述' },
+                    { fixed: 'right', width: 178, align: 'center', toolbar: '#bar', title: '操作' }
+                ]],
+                id: 'nameReload'
+            });
+
+            //监听工具条
+            table.on('tool(_list)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'detail') {
+                    layer.msg('ID：' + data.Id + ' 的查看操作');
+                } else if (obj.event === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("DeleteArticle", "Article")",
+                            cache: false,
+                            data: { id: data.Id},
+                            success: function (data) {
+                                var result = JSON.parse(data);
+                                //成功跳转至登录页
+                                if (result.IsSuccess) {
+                                    obj.del();
+                                    layer.close(index);
+                                }
+                                //失败弹出错误信息
+                                else {
+                                    layer.msg(result.Message, {
+                                        icon: 5,
+                                        shift: 6//添加抖动的效果
+                                    });
+                                }
+                            }
+                        });
+                    });
+                } else if (obj.event === 'edit') {
+                    var url = '@Url.Action("CreateOrUpdateArticle", "Article")' + "?id=" + data.Id;
+                    layer.open({
+                    type: 2,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['800px', '600px'], //宽高
+                    title:'编辑文章',
+                    content: [url, 'no'],
+                    btn: ['保存', '取消'], //只是为了演示
+                    yes: function (index, layero) {
+                        var body = layer.getChildFrame('body', index);
+                        var submitBtn = body.find("#submit");
+                        $(submitBtn).click();
+                    },
+                    btn2: function () {
+                        layer.closeAll();
+                    }
+                    });
+                }
+            });
+
+            var $ = layui.$, active = {
+                reload: function () {
+                    var title = $('#title');
+                    //执行重载
+                    table.reload('nameReload', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                      , where: {
+                          Title: title.val()
+                      }
+                    });
+                }
+            };
+
+            $('.selectTable .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+            $('#add').on('click', function () {
+                layer.open({
+                    type: 2,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['800px', '600px'], //宽高
+                    title:'新建文章',
+                    content: ['@Url.Action("CreateOrUpdateArticle", "Article")', 'no'],
+                    btn: ['保存', '取消'], //只是为了演示
+                    yes: function (index, layero) {
+                        var body = layer.getChildFrame('body', index);
+                        var submitBtn = body.find("#submit");
+                        $(submitBtn).click();
+                    },
+                    btn2: function () {
+                        layer.closeAll();
+                    }
+                });
+            });
+        });
+
+
+    </script>
+}

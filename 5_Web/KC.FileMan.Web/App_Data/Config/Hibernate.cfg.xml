@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--SQL Server连接配置-->
+<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+    <property name="dialect">NHibernate.Dialect.MsSql2008Dialect</property>
+    <property name="connection.driver_class">NHibernate.Driver.SqlClientDriver</property>
+    <property name="connection.connection_string">Server=!;database=SHCM01;uid=!;pwd=!;</property>
+    <property name="adonet.batch_size">20</property>
+    <property name="show_sql">true</property>
+    <property name="command_timeout">60</property>
+    <property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>
+    <property name="connection.isolation">ReadCommitted</property>
+    <property name="proxyfactory.factory_class">NHibernate.Bytecode.DefaultProxyFactoryFactory, NHibernate</property>
+    <property name="current_session_context_class">web</property>
+    <mapping assembly="KC.FileMan.Domain"/>
+  </session-factory>
+</hibernate-configuration>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--My SQL连接配置-->
+<!--<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+  <session-factory>
+    <property name="connection.provider">NHibernate.Connection.DriverConnectionProvider</property>
+    <property name="dialect">NHibernate.Dialect.MySQL5Dialect</property>
+    <property name="connection.driver_class">NHibernate.Driver.MySqlDataDriver</property>
+    <property name="connection.connection_string">Database=SHCM01;Data Source=!;User Id=!;Password=!;charset=utf8;SslMode = none;</property>
+    <property name="adonet.batch_size">20</property>
+    --><!--<property name="adonet.factory_class">NHibernate.MySQLBatcher.MySqlClientBatchingBatcherFactory, NHibernate.MySQLBatcher</property>--><!--
+    <property name="show_sql">true</property>
+    --><!--<property name="use_outer_join">true</property>--><!--
+    <property name="command_timeout">60</property>
+    <property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>
+    <property name="connection.isolation">ReadCommitted</property>
+    <property name="proxyfactory.factory_class">NHibernate.Bytecode.DefaultProxyFactoryFactory, NHibernate</property>
+    <property name="current_session_context_class">web</property>
+    <mapping assembly="KC.FileMan.Domain"/>
+  </session-factory>
+</hibernate-configuration>-->
+
+
+

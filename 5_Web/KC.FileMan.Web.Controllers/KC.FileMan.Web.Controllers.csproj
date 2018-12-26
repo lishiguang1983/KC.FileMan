@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.2.0" />
+    <PackageReference Include="UEditorNetCore" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\3_Infrastructure\KC.FileMan.Infrastructure\KC.FileMan.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\4_Application\KC.FileMan.IApplication\KC.FileMan.IApplication.csproj" />
+    <ProjectReference Include="..\KC.FileMan.Web.ViewModels\KC.FileMan.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
