@@ -1,15 +1,10 @@
-﻿using KC.FileMan.Domain;
-using KC.FileMan.Domain.Entities;
+﻿using KC.FileMan.Domain.Entities;
 using KC.FileMan.IApplication;
 using KC.FileMan.Infrastructure;
 using KC.FileMan.Infrastructure.DataStructure;
 using KC.FileMan.IRepository;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 //using System.IO;
 
